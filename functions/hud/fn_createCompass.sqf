@@ -1,24 +1,20 @@
 if (!hasInterface) exitWith {false};
-if !([] call ZuluFX_fnc_canUseCompass) exitWith {false};
+if !(call ZuluFX_fnc_canUseCompass) exitWith {false};
 
 disableSerialization;
 
 private _existing=uiNamespace getVariable ["ZuluFX_compassTicks",[]];
+if ((count _existing)>0 && {(_existing findIf {!isNull _x})>=0}) exitWith {true};
 
-if ((count _existing)>0 && {(_existing findIf {!isNull _x})>=0}) exitWith {
-    true
-};
-
-[] call ZuluFX_fnc_cleanupCompass;
+call ZuluFX_fnc_cleanupCompass;
 
 private _display=findDisplay 46;
 if (isNull _display) exitWith {false};
 
-private _tickCount=15;
 private _ticks=[];
 private _labels=[];
 
-for "_i" from 0 to (_tickCount-1) do {
+for "_i" from 0 to 14 do {
     private _tick=_display ctrlCreate ["RscText",-1];
     _tick ctrlSetBackgroundColor [0.78,0.95,0.92,0.92];
     _tick ctrlEnable false;
@@ -51,5 +47,5 @@ uiNamespace setVariable ["ZuluFX_compassLabels",_labels];
 uiNamespace setVariable ["ZuluFX_compassCentre",_centre];
 uiNamespace setVariable ["ZuluFX_compassHeading",_heading];
 
-[] call ZuluFX_fnc_updateCompass;
+call ZuluFX_fnc_updateCompass;
 true

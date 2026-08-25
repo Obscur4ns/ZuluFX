@@ -14,7 +14,6 @@ if !(missionNamespace getVariable ["ZuluFX_nvgFusionCapable",false]) exitWith {f
 
 private _modes=missionNamespace getVariable ["ZuluFX_nvgFusionModes",[]];
 _mode=toUpper _mode;
-
 if !(_mode in _modes) exitWith {false};
 
 private _current=toUpper (missionNamespace getVariable ["ZuluFX_fusionMode",""]);
@@ -46,7 +45,7 @@ private _hudOwnsModeDisplay=_hudMode in ["BNVDF","FPANO"];
 
 if (_notify && {!_hudOwnsModeDisplay}) then {
     private _label=if (_mode=="OUTLINE") then {"Outline"} else {"Patrol"};
-    [format ["ZuluFX Fusion Mode: %1",_label],1.2] call CBA_fnc_notify;
+    [format ["Fusion: %1",_label],1.2] call CBA_fnc_notify;
 };
 
 true
