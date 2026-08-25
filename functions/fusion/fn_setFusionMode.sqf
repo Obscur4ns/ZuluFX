@@ -41,7 +41,10 @@ if (_wasActive && {[] call ZuluFX_fnc_canUseFusion}) then {
     [] call ZuluFX_fnc_createFusion;
 };
 
-if (_notify) then {
+private _hudMode=toUpper (missionNamespace getVariable ["ZuluFX_nvgHUDMode","NONE"]);
+private _hudOwnsModeDisplay=_hudMode in ["BNVDF","FPANO"];
+
+if (_notify && {!_hudOwnsModeDisplay}) then {
     private _label=if (_mode=="OUTLINE") then {"Outline"} else {"Patrol"};
     [format ["ZuluFX Fusion Mode: %1",_label],1.2] call CBA_fnc_notify;
 };

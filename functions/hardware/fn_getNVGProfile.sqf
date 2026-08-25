@@ -12,7 +12,10 @@ private _profile=createHashMapFromArray [
     ["fusionOutlineRange",300],
     ["fusionMaxRange",500],
     ["compassCapable",false],
-    ["compassAnchor",[0.5,0.15]]
+    ["compassAnchor",[0.5,0.15]],
+    ["hudMode","NONE"],
+    ["batteryIndicator","NONE"],
+    ["batteryIndicatorAnchor",[0.5,0.5]]
 ];
 
 if (_item=="") exitWith {_profile};
@@ -55,7 +58,15 @@ if (_outlineRange<=0) then {_outlineRange=300};
 _outlineRange=_outlineRange min _patrolRange;
 
 private _maxRange=_patrolRange max _outlineRange;
-private _compass=getNumber (_cfg >> "ZuluFX_compassCapable")>0;
+
+private _hudMode=toUpper (getText (_cfg >> "ZuluFX_hudMode"));
+private _legacyCompass=getNumber (_cfg >> "ZuluFX_compassCapable")>0;
+
+if !(_hudMode in ["NONE","COMPASS","BNVDF","FPANO"]) then {
+    _hudMode=if (_legacyCompass) then {"COMPASS"} else {"NONE"};
+};
+
+private _compass=_legacyCompass || {_hudMode in ["COMPASS","BNVDF","FPANO"]};
 
 private _anchor=getArray (_cfg >> "ZuluFX_compassAnchor");
 if ((count _anchor)<2) then {
@@ -64,6 +75,21 @@ if ((count _anchor)<2) then {
     _anchor=[
         ((_anchor#0) max 0) min 1,
         ((_anchor#1) max 0) min 1
+    ];
+};
+
+private _batteryIndicator=toUpper (getText (_cfg >> "ZuluFX_batteryIndicator"));
+if !(_batteryIndicator in ["NONE","LAMP","HUD"]) then {
+    _batteryIndicator="NONE";
+};
+
+private _batteryAnchor=getArray (_cfg >> "ZuluFX_batteryIndicatorAnchor");
+if ((count _batteryAnchor)<2) then {
+    _batteryAnchor=[0.5,0.5];
+} else {
+    _batteryAnchor=[
+        ((_batteryAnchor#0) max 0) min 1,
+        ((_batteryAnchor#1) max 0) min 1
     ];
 };
 
@@ -78,5 +104,8 @@ _profile set ["fusionOutlineRange",_outlineRange];
 _profile set ["fusionMaxRange",_maxRange];
 _profile set ["compassCapable",_compass];
 _profile set ["compassAnchor",_anchor];
+_profile set ["hudMode",_hudMode];
+_profile set ["batteryIndicator",_batteryIndicator];
+_profile set ["batteryIndicatorAnchor",_batteryAnchor];
 
 _profile

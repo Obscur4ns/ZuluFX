@@ -34,6 +34,9 @@ ZuluFX_nvgFusionOutlineRange=_profile get "fusionOutlineRange";
 ZuluFX_nvgFusionMaxRange=_profile get "fusionMaxRange";
 ZuluFX_nvgCompassCapable=_profile get "compassCapable";
 ZuluFX_nvgCompassAnchor=_profile get "compassAnchor";
+ZuluFX_nvgHUDMode=_profile get "hudMode";
+ZuluFX_nvgBatteryIndicator=_profile get "batteryIndicator";
+ZuluFX_nvgBatteryIndicatorAnchor=_profile get "batteryIndicatorAnchor";
 
 private _mode=missionNamespace getVariable ["ZuluFX_fusionMode",ZuluFX_nvgFusionDefaultMode];
 
@@ -51,21 +54,18 @@ ZuluFX_fusionMode=_mode;
 
 if (_changed) then {
     ZuluFX_fusionVisionState=if ([] call ZuluFX_fnc_isNVGActive) then {1} else {0};
+    ZuluFX_hudDataNextUpdate=0;
 };
 
 if (_debug) then {
     systemChat format [
-        "ZuluFX HW | %1 | T:%2 | F:%3 %4deg | M:%5/%6 | R:%7/%8 | C:%9 | A:%10",
+        "ZuluFX HW | %1 | T:%2 | F:%3 %4deg | HUD:%5 | BAT:%6",
         ZuluFX_nvgClass,
         ZuluFX_nvgTubeMode,
         ZuluFX_nvgFusionCapable,
         ZuluFX_nvgFusionFOV,
-        ZuluFX_fusionMode,
-        ZuluFX_nvgFusionModes,
-        ZuluFX_nvgFusionPatrolRange,
-        ZuluFX_nvgFusionOutlineRange,
-        ZuluFX_nvgCompassCapable,
-        ZuluFX_nvgCompassAnchor
+        ZuluFX_nvgHUDMode,
+        ZuluFX_nvgBatteryIndicator
     ];
 };
 

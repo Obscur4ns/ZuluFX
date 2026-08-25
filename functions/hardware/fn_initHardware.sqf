@@ -13,6 +13,9 @@ ZuluFX_nvgFusionOutlineRange=300;
 ZuluFX_nvgFusionMaxRange=500;
 ZuluFX_nvgCompassCapable=false;
 ZuluFX_nvgCompassAnchor=[0.5,0.15];
+ZuluFX_nvgHUDMode="NONE";
+ZuluFX_nvgBatteryIndicator="NONE";
+ZuluFX_nvgBatteryIndicatorAnchor=[0.5,0.5];
 
 ZuluFX_fusionMode="PATROL";
 ZuluFX_fusionActive=false;

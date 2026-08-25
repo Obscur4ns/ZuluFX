@@ -1,5 +1,5 @@
 if (!hasInterface) exitWith {false};
-if !(call ZuluFX_fnc_canUseCompass) exitWith {false};
+if !([] call ZuluFX_fnc_canUseCompass) exitWith {false};
 
 disableSerialization;
 
@@ -9,7 +9,7 @@ if ((count _existing)>0 && {(_existing findIf {!isNull _x})>=0}) exitWith {
     true
 };
 
-call ZuluFX_fnc_cleanupCompass;
+[] call ZuluFX_fnc_cleanupCompass;
 
 private _display=findDisplay 46;
 if (isNull _display) exitWith {false};
@@ -51,13 +51,5 @@ uiNamespace setVariable ["ZuluFX_compassLabels",_labels];
 uiNamespace setVariable ["ZuluFX_compassCentre",_centre];
 uiNamespace setVariable ["ZuluFX_compassHeading",_heading];
 
-if (!isNil "ZuluFX_compassPFH") then {
-    [ZuluFX_compassPFH] call CBA_fnc_removePerFrameHandler;
-};
-
-ZuluFX_compassPFH=[{
-    call ZuluFX_fnc_updateCompass;
-},0.05] call CBA_fnc_addPerFrameHandler;
-
-call ZuluFX_fnc_updateCompass;
+[] call ZuluFX_fnc_updateCompass;
 true

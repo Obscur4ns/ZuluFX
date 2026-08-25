@@ -23,7 +23,6 @@ class CfgFunctions
             class startGainLoop {postInit=1;};
             class setGain {};
         };
-
         class Hardware
         {
             file="\ZuluFX\functions\hardware";
@@ -31,7 +30,6 @@ class CfgFunctions
             class updateNVGProfile {};
             class initHardware {postInit=1;};
         };
-
         class Gating
         {
             file="\ZuluFX\functions\Gating";
@@ -63,7 +61,6 @@ class CfgFunctions
             class createQuadRenderer {};
             class applyQuadRenderer {};
         };
-
         class Colour
         {
             file="\ZuluFX\functions\colour";
@@ -71,7 +68,6 @@ class CfgFunctions
             class setPhosphor {};
             class setOutputFilter {};
         };
-
         class Scintillation
         {
             file="\ZuluFX\functions\scintillation";
@@ -82,7 +78,6 @@ class CfgFunctions
             class getScintillationStyle {};
             class randomScintillationPoint {};
         };
-
         class Fusion
         {
             file="\ZuluFX\functions\fusion";
@@ -102,7 +97,6 @@ class CfgFunctions
             class handleFusionVisionMode {};
             class initFusionControls {postInit=1;};
         };
-
         class HUD
         {
             file="\ZuluFX\functions\hud";
@@ -111,9 +105,18 @@ class CfgFunctions
             class updateCompass {};
             class cleanupCompass {};
             class setCompass {};
-            class initCompass {postInit=1;};
+            class canUseHUD {};
+            class createHUD {};
+            class updateHUD {};
+            class cleanupHUD {};
+            class getHUDData {};
+            class createBNVDF {};
+            class updateBNVDF {};
+            class createFPANO {};
+            class updateFPANO {};
+            class updateBatteryIndicator {};
+            class initHUD {postInit=1;};
         };
-
         class DOF
         {
             file="\ZuluFX\functions\DOF";
