@@ -42,8 +42,8 @@ if (isNull _ctrl) then {
     if (isNull _display) exitWith {false};
 
     _ctrl=_display ctrlCreate ["RscPictureKeepAspect",-1];
-    _ctrl ctrlSetText "\A3\ui_f\data\map\markers\military\dot_CA.paa";
-    _ctrl ctrlSetTextColor [0.82,1,0.96,0.95];
+    _ctrl ctrlSetText "\ZuluFX\data\hud\battery_lamp_ca.paa";
+    _ctrl ctrlSetTextColor [0.72,1.00,0.82,0.92];
     _ctrl ctrlEnable false;
     _ctrl ctrlShow false;
     _ctrl ctrlCommit 0;
@@ -56,10 +56,10 @@ _rect params ["_ox","_oy","_ow","_oh"];
 
 private _anchor=missionNamespace getVariable [
     "ZuluFX_nvgBatteryIndicatorAnchor",
-    [0.195,0.155]
+    [0.195,0.225]
 ];
 
-private _sizePx=16;
+private _sizePx=22;
 private _w=pixelW*_sizePx;
 private _h=pixelH*_sizePx;
 
@@ -70,7 +70,7 @@ _ctrl ctrlSetPosition [
     _h
 ];
 
-_ctrl ctrlSetTextColor [0.82,1,0.96,0.95];
+_ctrl ctrlSetTextColor [0.72,1.00,0.82,0.92];
 _ctrl ctrlShow true;
 _ctrl ctrlCommit 0;
 
