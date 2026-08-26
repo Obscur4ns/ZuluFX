@@ -24,6 +24,7 @@ if (_level<=0) then {
 private _states=missionNamespace getVariable ["ZuluFX_batteryStates",createHashMap];
 _states set [_key,_state];
 ZuluFX_batteryStates=_states;
+ZuluFX_batteryPersistenceDirty=true;
 
 private _current=[] call ZuluFX_fnc_getBatteryStateKey;
 

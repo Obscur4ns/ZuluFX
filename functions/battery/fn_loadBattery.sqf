@@ -45,6 +45,7 @@ private _key=[] call ZuluFX_fnc_getBatteryStateKey;
 private _states=missionNamespace getVariable ["ZuluFX_batteryStates",createHashMap];
 _states set [_key,[_level,_cells]];
 ZuluFX_batteryStates=_states;
+ZuluFX_batteryPersistenceDirty=true;
 
 ZuluFX_nvgBatteryLevel=_level;
 ZuluFX_nvgLoadedBatteries=_cells;
@@ -59,5 +60,7 @@ ZuluFX_nvgBatteryLow=
 
 ZuluFX_batteryLastTick=diag_tickTime;
 
+[true] call ZuluFX_fnc_saveBatteryStates;
 ["CR123A Loaded",1.2] call CBA_fnc_notify;
+
 true

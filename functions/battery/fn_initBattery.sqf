@@ -5,10 +5,15 @@ ZuluFX_nvgBatteryLevel=-1;
 ZuluFX_nvgLoadedBatteries=0;
 ZuluFX_nvgBatteryLow=false;
 ZuluFX_batteryLastTick=diag_tickTime;
+ZuluFX_batteryPersistenceKey="";
+ZuluFX_batteryPersistenceDirty=false;
+ZuluFX_batteryPersistenceNextSave=diag_tickTime+30;
 
 if (isNil "ZuluFX_batteryDrainScale") then {
     ZuluFX_batteryDrainScale=1;
 };
+
+[] call ZuluFX_fnc_loadBatteryStates;
 
 if (!isNil "ZuluFX_batteryPFH") then {
     [ZuluFX_batteryPFH] call CBA_fnc_removePerFrameHandler;
@@ -17,6 +22,13 @@ if (!isNil "ZuluFX_batteryPFH") then {
 ZuluFX_batteryPFH=[
     {
         [] call ZuluFX_fnc_updateBattery;
+
+        if (
+            missionNamespace getVariable ["ZuluFX_batteryPersistenceDirty",false] &&
+            {diag_tickTime>=(missionNamespace getVariable ["ZuluFX_batteryPersistenceNextSave",0])}
+        ) then {
+            [] call ZuluFX_fnc_saveBatteryStates;
+        };
     },
     1
 ] call CBA_fnc_addPerFrameHandler;
@@ -59,6 +71,19 @@ ZuluFX_batteryPFH=[
         [] call ZuluFX_fnc_updateBattery;
     }] call CBA_fnc_execNextFrame;
 }] call CBA_fnc_addPlayerEventHandler;
+
+addMissionEventHandler ["Ended",{
+    [true] call ZuluFX_fnc_saveBatteryStates;
+}];
+
+private _display=findDisplay 46;
+
+if (!isNull _display) then {
+    _display displayAddEventHandler ["Unload",{
+        [true] call ZuluFX_fnc_saveBatteryStates;
+        false
+    }];
+};
 
 [] call ZuluFX_fnc_initBatteryInteractions;
 
