@@ -117,6 +117,21 @@ class CfgFunctions
             class updateBatteryIndicator {};
             class initHUD {postInit=1;};
         };
+        class Battery
+        {
+            file="\ZuluFX\functions\battery";
+            class initBatterySettings {preInit=1;};
+            class getBatteryStateKey {};
+            class getBatteryState {};
+            class getBatteryLevel {};
+            class getBatteryRuntime {};
+            class setBatteryLevel {};
+            class updateBattery {};
+            class loadBattery {};
+            class replaceBattery {};
+            class initBatteryInteractions {};
+            class initBattery {postInit=1;};
+        };
         class DOF
         {
             file="\ZuluFX\functions\DOF";
