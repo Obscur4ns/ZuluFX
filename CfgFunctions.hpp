@@ -125,6 +125,8 @@ class CfgFunctions
             class getBatteryState {};
             class getBatteryLevel {};
             class getBatteryRuntime {};
+            class loadBatteryStates {};
+            class saveBatteryStates {};
             class setBatteryLevel {};
             class updateBattery {};
             class loadBattery {};
