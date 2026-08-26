@@ -16,6 +16,8 @@ if (isNil "ZuluFX_nvgBatteryLevel") then {
 };
 
 uiNamespace setVariable ["ZuluFX_bnvdfControls",[]];
+uiNamespace setVariable ["ZuluFX_bnvdfBatteryFrame",controlNull];
+uiNamespace setVariable ["ZuluFX_bnvdfBatteryBars",[]];
 uiNamespace setVariable ["ZuluFX_fpanoControls",[]];
 uiNamespace setVariable ["ZuluFX_batteryIndicatorControl",controlNull];
 

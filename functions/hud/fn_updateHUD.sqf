@@ -28,6 +28,7 @@ if (!isNull findDisplay 312 || {!isNull findDisplay 177}) exitWith {
 
     private _centre=uiNamespace getVariable ["ZuluFX_compassCentre",controlNull];
     private _heading=uiNamespace getVariable ["ZuluFX_compassHeading",controlNull];
+
     if (!isNull _centre) then {_centre ctrlShow false};
     if (!isNull _heading) then {_heading ctrlShow false};
 
@@ -35,11 +36,22 @@ if (!isNull findDisplay 312 || {!isNull findDisplay 177}) exitWith {
         if (!isNull _x) then {_x ctrlShow false};
     } forEach (uiNamespace getVariable ["ZuluFX_bnvdfControls",[]]);
 
+    private _bnvdfBatteryFrame=uiNamespace getVariable ["ZuluFX_bnvdfBatteryFrame",controlNull];
+
+    if (!isNull _bnvdfBatteryFrame) then {
+        _bnvdfBatteryFrame ctrlShow false;
+    };
+
+    {
+        if (!isNull _x) then {_x ctrlShow false};
+    } forEach (uiNamespace getVariable ["ZuluFX_bnvdfBatteryBars",[]]);
+
     {
         if (!isNull _x) then {_x ctrlShow false};
     } forEach (uiNamespace getVariable ["ZuluFX_fpanoControls",[]]);
 
     private _battery=uiNamespace getVariable ["ZuluFX_batteryIndicatorControl",controlNull];
+
     if (!isNull _battery) then {_battery ctrlShow false};
 
     true
@@ -49,10 +61,12 @@ switch (_mode) do {
     case "COMPASS": {
         [] call ZuluFX_fnc_updateCompass;
     };
+
     case "BNVDF": {
         [] call ZuluFX_fnc_updateCompass;
         [] call ZuluFX_fnc_updateBNVDF;
     };
+
     case "FPANO": {
         [] call ZuluFX_fnc_updateCompass;
         [] call ZuluFX_fnc_updateFPANO;
@@ -60,4 +74,5 @@ switch (_mode) do {
 };
 
 [] call ZuluFX_fnc_updateBatteryIndicator;
+
 true
