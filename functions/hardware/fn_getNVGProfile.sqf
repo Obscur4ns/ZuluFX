@@ -1,5 +1,4 @@
 params [["_item",hmd player,[""]]];
-
 private _profile=createHashMapFromArray [
     ["class",_item],
     ["supported",false],
@@ -15,9 +14,15 @@ private _profile=createHashMapFromArray [
     ["compassAnchor",[0.5,0.15]],
     ["hudMode","NONE"],
     ["batteryIndicator","NONE"],
-    ["batteryIndicatorAnchor",[0.5,0.5]]
+    ["batteryIndicatorAnchor",[0.5,0.5]],
+    ["batteryCapable",false],
+    ["batteryProfile",""],
+    ["maxBatteries",0],
+    ["requiredBatteries",0],
+    ["batteryCapacityMultiplier",1],
+    ["batteryLowThreshold",0.20],
+    ["batteryStateKey",""]
 ];
-
 if (_item=="") exitWith {_profile};
 
 private _cfg=configFile >> "CfgWeapons" >> _item;
@@ -58,7 +63,6 @@ if (_outlineRange<=0) then {_outlineRange=300};
 _outlineRange=_outlineRange min _patrolRange;
 
 private _maxRange=_patrolRange max _outlineRange;
-
 private _hudMode=toUpper (getText (_cfg >> "ZuluFX_hudMode"));
 private _legacyCompass=getNumber (_cfg >> "ZuluFX_compassCapable")>0;
 
@@ -67,8 +71,8 @@ if !(_hudMode in ["NONE","COMPASS","BNVDF","FPANO"]) then {
 };
 
 private _compass=_legacyCompass || {_hudMode in ["COMPASS","BNVDF","FPANO"]};
-
 private _anchor=getArray (_cfg >> "ZuluFX_compassAnchor");
+
 if ((count _anchor)<2) then {
     _anchor=if (_tubeMode==4) then {[0.5,0.13]} else {[0.5,0.15]};
 } else {
@@ -93,6 +97,33 @@ if ((count _batteryAnchor)<2) then {
     ];
 };
 
+private _batteryProfile=toUpper (getText (_cfg >> "ZuluFX_batteryProfile"));
+if !(_batteryProfile in ["KESTREL","BNVDF","GPNVG"]) then {
+    _batteryProfile="";
+};
+
+private _maxBatteries=round (getNumber (_cfg >> "ZuluFX_maxBatteries"));
+if (_maxBatteries<0) then {_maxBatteries=0};
+
+private _requiredBatteries=round (getNumber (_cfg >> "ZuluFX_requiredBatteries"));
+if (_requiredBatteries<=0 && {_maxBatteries>0}) then {_requiredBatteries=1};
+_requiredBatteries=(_requiredBatteries max 0) min _maxBatteries;
+
+private _batteryCapable=
+    getNumber (_cfg >> "ZuluFX_batteryCapable")>0 &&
+    {_batteryProfile!=""} &&
+    {_maxBatteries>0};
+
+private _capacityMultiplier=getNumber (_cfg >> "ZuluFX_batteryCapacityMultiplier");
+if (_capacityMultiplier<=0) then {_capacityMultiplier=1};
+_capacityMultiplier=(_capacityMultiplier max 0.1) min 20;
+
+private _batteryLow=getNumber (_cfg >> "ZuluFX_batteryLowThreshold");
+if (_batteryLow<=0) then {_batteryLow=0.20};
+_batteryLow=(_batteryLow max 0.01) min 0.99;
+
+private _batteryStateKey=getText (_cfg >> "ZuluFX_batteryStateKey");
+
 _profile set ["supported",_tubeMode in [2,4]];
 _profile set ["tubeMode",_tubeMode];
 _profile set ["fusionCapable",_fusion];
@@ -107,5 +138,12 @@ _profile set ["compassAnchor",_anchor];
 _profile set ["hudMode",_hudMode];
 _profile set ["batteryIndicator",_batteryIndicator];
 _profile set ["batteryIndicatorAnchor",_batteryAnchor];
+_profile set ["batteryCapable",_batteryCapable];
+_profile set ["batteryProfile",_batteryProfile];
+_profile set ["maxBatteries",_maxBatteries];
+_profile set ["requiredBatteries",_requiredBatteries];
+_profile set ["batteryCapacityMultiplier",_capacityMultiplier];
+_profile set ["batteryLowThreshold",_batteryLow];
+_profile set ["batteryStateKey",_batteryStateKey];
 
 _profile

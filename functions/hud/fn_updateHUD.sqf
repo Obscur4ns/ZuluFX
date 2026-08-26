@@ -15,7 +15,13 @@ if (
     [] call ZuluFX_fnc_createHUD
 };
 
-if (!isNull findDisplay 312 || {!isNull findDisplay 177}) exitWith {
+private _uiSuppressed=
+    !isNil "ace_arsenal_camera" ||
+    {!isNull findDisplay 602} ||
+    {!isNull findDisplay 312} ||
+    {!isNull findDisplay 177};
+
+if (_uiSuppressed) exitWith {
     disableSerialization;
 
     {
@@ -52,7 +58,9 @@ if (!isNull findDisplay 312 || {!isNull findDisplay 177}) exitWith {
 
     private _battery=uiNamespace getVariable ["ZuluFX_batteryIndicatorControl",controlNull];
 
-    if (!isNull _battery) then {_battery ctrlShow false};
+    if (!isNull _battery) then {
+        _battery ctrlShow false;
+    };
 
     true
 };

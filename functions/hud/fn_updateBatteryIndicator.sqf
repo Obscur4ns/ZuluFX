@@ -1,15 +1,20 @@
 if (!hasInterface) exitWith {false};
 disableSerialization;
 
-private _type=toUpper (missionNamespace getVariable ["ZuluFX_nvgBatteryIndicator","NONE"]);
 private _ctrl=uiNamespace getVariable ["ZuluFX_batteryIndicatorControl",controlNull];
+
+if !(missionNamespace getVariable ["ZuluFX_settingBatteryEnabled",true]) exitWith {
+    if (!isNull _ctrl) then {_ctrl ctrlShow false};
+    true
+};
+
+private _type=toUpper (missionNamespace getVariable ["ZuluFX_nvgBatteryIndicator","NONE"]);
 private _kind=uiNamespace getVariable ["ZuluFX_batteryIndicatorControlKind",""];
 
 if (_type!="LAMP") exitWith {
     if (!isNull _ctrl) then {_ctrl ctrlShow false};
     true
 };
-
 if !(missionNamespace getVariable ["ZuluFX_nvgBatteryLow",false]) exitWith {
     if (!isNull _ctrl) then {_ctrl ctrlShow false};
     true
@@ -26,7 +31,6 @@ if ((count _rect)!=4) exitWith {
     if (!isNull _ctrl) then {_ctrl ctrlShow false};
     false
 };
-
 if (_kind!="LAMP_PICTURE") then {
     if (!isNull _ctrl) then {
         ctrlDelete _ctrl;
@@ -40,7 +44,6 @@ if (_kind!="LAMP_PICTURE") then {
 if (isNull _ctrl) then {
     private _display=findDisplay 46;
     if (isNull _display) exitWith {false};
-
     _ctrl=_display ctrlCreate ["RscPictureKeepAspect",-1];
     _ctrl ctrlSetText "\ZuluFX\data\hud\battery_lamp_ca.paa";
     _ctrl ctrlSetTextColor [0.72,1.00,0.82,0.92];
@@ -53,7 +56,6 @@ if (isNull _ctrl) then {
 };
 
 _rect params ["_ox","_oy","_ow","_oh"];
-
 private _anchor=missionNamespace getVariable [
     "ZuluFX_nvgBatteryIndicatorAnchor",
     [0.195,0.225]

@@ -12,5 +12,6 @@ if !([] call ZuluFX_fnc_isNVGActive) exitWith {false};
 
 private _hudMode=toUpper (missionNamespace getVariable ["ZuluFX_nvgHUDMode","NONE"]);
 private _battery=toUpper (missionNamespace getVariable ["ZuluFX_nvgBatteryIndicator","NONE"]);
+private _batteryEnabled=missionNamespace getVariable ["ZuluFX_settingBatteryEnabled",true];
 
-(_hudMode!="NONE") || {_battery!="NONE"}
+(_hudMode!="NONE") || {_batteryEnabled && {_battery!="NONE"}}

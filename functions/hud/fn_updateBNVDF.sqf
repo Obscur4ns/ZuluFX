@@ -4,7 +4,6 @@ disableSerialization;
 private _controls=uiNamespace getVariable ["ZuluFX_bnvdfControls",[]];
 private _batteryFrame=uiNamespace getVariable ["ZuluFX_bnvdfBatteryFrame",controlNull];
 private _batteryBars=uiNamespace getVariable ["ZuluFX_bnvdfBatteryBars",[]];
-
 if (
     (count _controls)!=5 ||
     {(_controls findIf {isNull _x})>=0} ||
@@ -24,7 +23,6 @@ if ((count _rect)!=4) exitWith {
     {_x ctrlShow false} forEach _batteryBars;
     false
 };
-
 _rect params ["_ox","_oy","_ow","_oh"];
 
 private _data=[] call ZuluFX_fnc_getHUDData;
@@ -38,7 +36,6 @@ private _alt=_controls#1;
 private _timeCtrl=_controls#2;
 private _batteryPlaceholder=_controls#3;
 private _fusionCtrl=_controls#4;
-
 private _lineH=_oh*0.060;
 private _leftBlockW=_ow*0.24;
 private _rightBlockW=_ow*0.22;
@@ -54,7 +51,6 @@ _loc ctrlSetStructuredText parseText format [
 ];
 _loc ctrlShow true;
 _loc ctrlCommit 0;
-
 _alt ctrlSetPosition [_leftX,_topY+_rowGap,_leftBlockW,_lineH];
 _alt ctrlSetStructuredText parseText format [
     "<t align='left' shadow='1' font='RobotoCondensed' size='0.70' color='#CFF5EE'>ALT %1</t>",
@@ -62,7 +58,6 @@ _alt ctrlSetStructuredText parseText format [
 ];
 _alt ctrlShow true;
 _alt ctrlCommit 0;
-
 _timeCtrl ctrlSetPosition [_rightX,_topY,_rightBlockW,_lineH];
 _timeCtrl ctrlSetStructuredText parseText format [
     "<t align='right' shadow='1' font='RobotoCondensed' size='0.70' color='#CFF5EE'>TIME %1</t>",
@@ -74,8 +69,10 @@ _timeCtrl ctrlCommit 0;
 _batteryPlaceholder ctrlShow false;
 
 private _batteryType=toUpper (missionNamespace getVariable ["ZuluFX_nvgBatteryIndicator","NONE"]);
+private _batteryEnabled=missionNamespace getVariable ["ZuluFX_settingBatteryEnabled",true];
+private _batteryLevel=missionNamespace getVariable ["ZuluFX_nvgBatteryLevel",-1];
 
-if (_batteryType=="HUD") then {
+if (_batteryEnabled && {_batteryType=="HUD"} && {_batteryLevel>=0}) then {
     private _batterySlotY=_topY+_rowGap;
     private _batterySlotH=_oh*0.060;
     private _batteryW=_ow*0.055;
@@ -83,7 +80,6 @@ if (_batteryType=="HUD") then {
     private _batteryCenterX=_rightX+(_rightBlockW*0.78);
     private _batteryX=_batteryCenterX-(_batteryW*0.5);
     private _batteryY=_batterySlotY+((_batterySlotH-_batteryH)*0.5)-(_oh*0.012);
-
     _batteryFrame ctrlSetPosition [
         _batteryX,
         _batteryY,
@@ -95,13 +91,7 @@ if (_batteryType=="HUD") then {
     _batteryFrame ctrlShow true;
     _batteryFrame ctrlCommit 0;
 
-    private _level=missionNamespace getVariable ["ZuluFX_nvgBatteryLevel",-1];
-
-    if (_level<0) then {
-        _level=missionNamespace getVariable ["ZuluFX_batteryHUDTestLevel",1];
-    };
-
-    _level=(_level max 0) min 1;
+    private _level=(_batteryLevel max 0) min 1;
 
     private _filled=if (_level<=0) then {
         0
@@ -118,7 +108,6 @@ if (_batteryType=="HUD") then {
 
     for "_i" from 0 to 4 do {
         private _bar=_batteryBars#_i;
-
         _bar ctrlSetPosition [
             _innerX+(_i*(_barW+_gap)),
             _innerY,
@@ -139,7 +128,6 @@ if (_fusion=="") then {
     _fusionCtrl ctrlShow false;
 } else {
     private _fusionW=_ow*0.20;
-
     _fusionCtrl ctrlSetPosition [
         _ox+(_ow*0.5)-(_fusionW*0.5),
         _oy+(_oh*0.80),
