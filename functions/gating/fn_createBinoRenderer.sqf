@@ -10,6 +10,8 @@ if (!isNull _border) then {_border ctrlShow false};
 private _res=getResolution;
 private _aspect=(_res#4) max 0.1;
 private _fovTop=(_res#6) max 0.01;
+private _baseViewFov=0.75;
+private _screenTanHalfV=(_fovTop*_baseViewFov) max 0.01;
 
 private _tubeFov=missionNamespace getVariable ["ZuluFX_binoTubeFov",40];
 private _apertureFracY=missionNamespace getVariable ["ZuluFX_binoApertureFracY",0.38];
@@ -23,7 +25,7 @@ _maskAlpha=(_maskAlpha max 0) min 1;
 _edgeAlpha=(_edgeAlpha max 0) min 1;
 _edgeFade=(_edgeFade max 0) min 1;
 
-private _tubeScreenFrac=(tan (_tubeFov/2))/_fovTop;
+private _tubeScreenFrac=(tan (_tubeFov/2))/_screenTanHalfV;
 private _controlScale=_tubeScreenFrac/_apertureFracY;
 
 private _screenX=safeZoneXAbs;

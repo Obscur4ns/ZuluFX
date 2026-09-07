@@ -10,6 +10,8 @@ if (!isNull _border) then {_border ctrlShow false};
 private _res=getResolution;
 private _aspect=(_res#4) max 0.1;
 private _fovTop=(_res#6) max 0.01;
+private _baseViewFov=0.75;
+private _screenTanHalfV=(_fovTop*_baseViewFov) max 0.01;
 
 private _verticalFov=missionNamespace getVariable ["ZuluFX_quadVerticalFov",48.5];
 private _apertureFracX=missionNamespace getVariable ["ZuluFX_quadApertureFracX",1306/2048];
@@ -23,7 +25,7 @@ _apertureFracY=(_apertureFracY max 0.01) min 1;
 _maskAlpha=(_maskAlpha max 0) min 1;
 _edgeAlpha=(_edgeAlpha max 0) min 1;
 
-private _tubeScreenFrac=(tan (_verticalFov/2))/_fovTop;
+private _tubeScreenFrac=(tan (_verticalFov/2))/_screenTanHalfV;
 private _controlScale=_tubeScreenFrac/_apertureFracY;
 private _effectiveHorizontalFov=2*atan((tan(_verticalFov/2))*(_apertureFracX/_apertureFracY));
 
@@ -87,21 +89,25 @@ private _validEdges=(count _edges)==4 && {(_edges findIf {isNull _x})<0};
 
 if (_validMask && {_validEdges}) exitWith {
     private _oldSignature=uiNamespace getVariable ["ZuluFX_quadRenderSignature",[]];
+
     if !(_signature isEqualTo _oldSignature) then {
         _mask ctrlSetText _texture;
         _mask ctrlSetPosition _pos;
         _mask ctrlSetTextColor [1,1,1,_maskAlpha];
         _mask ctrlCommit 0;
+
         for "_i" from 0 to 3 do {
             private _ctrl=_edges#_i;
             _ctrl ctrlSetPosition (_edgePos#_i);
             _ctrl ctrlSetBackgroundColor [0,0,0,_edgeAlpha];
             _ctrl ctrlCommit 0;
         };
+
         uiNamespace setVariable ["ZuluFX_quadPosition",_pos];
         uiNamespace setVariable ["ZuluFX_quadAperturePosition",_aperturePos];
         uiNamespace setVariable ["ZuluFX_quadRenderSignature",_signature];
     };
+
     true
 };
 
@@ -109,6 +115,7 @@ if (!isNull _mask) then {ctrlDelete _mask};
 {if (!isNull _x) then {ctrlDelete _x}} forEach _edges;
 
 private _newEdges=[];
+
 {
     private _ctrl=_display ctrlCreate ["RscText",-1];
     _ctrl ctrlSetBackgroundColor [0,0,0,_edgeAlpha];
