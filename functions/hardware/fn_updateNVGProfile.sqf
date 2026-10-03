@@ -25,6 +25,7 @@ ZuluFX_nvgSupported=_profile get "supported";
 ZuluFX_nvgTubeMode=_profile get "tubeMode";
 ZuluFX_nvgFusionCapable=_profile get "fusionCapable";
 ZuluFX_nvgFusionFOV=_profile get "fusionFOV";
+ZuluFX_nvgFusionAspect=_profile get "fusionAspect";
 ZuluFX_nvgFusionModes=_profile get "fusionModes";
 ZuluFX_nvgFusionDefaultMode=_profile get "fusionDefaultMode";
 ZuluFX_nvgFusionPatrolRange=_profile get "fusionPatrolRange";
@@ -65,10 +66,12 @@ if (_changed) then {
 
 if (_debug) then {
     systemChat format [
-        "ZuluFX HW | %1 | T:%2 | F:%3 | HUD:%4 | BAT:%5 %6 %7/%8",
+        "ZuluFX HW | %1 | T:%2 | F:%3 %4deg %5 | HUD:%6 | BAT:%7 %8 %9/%10",
         ZuluFX_nvgClass,
         ZuluFX_nvgTubeMode,
         ZuluFX_nvgFusionCapable,
+        ZuluFX_nvgFusionFOV,
+        ZuluFX_nvgFusionAspect,
         ZuluFX_nvgHUDMode,
         ZuluFX_nvgBatteryCapable,
         ZuluFX_nvgBatteryProfile,

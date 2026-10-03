@@ -16,6 +16,8 @@ ZuluFX_fusionActive=true;
 
 [] call ZuluFX_fnc_scanFusionCandidates;
 [] call ZuluFX_fnc_updateFusionTargets;
+[] call ZuluFX_fnc_createFusionOverlay;
+[] call ZuluFX_fnc_updateFusionOverlay;
 
 if (!isNil "ZuluFX_fusionCandidatePFH") then {
     [ZuluFX_fusionCandidatePFH] call CBA_fnc_removePerFrameHandler;
@@ -23,6 +25,10 @@ if (!isNil "ZuluFX_fusionCandidatePFH") then {
 
 if (!isNil "ZuluFX_fusionTargetPFH") then {
     [ZuluFX_fusionTargetPFH] call CBA_fnc_removePerFrameHandler;
+};
+
+if (!isNil "ZuluFX_fusionOverlayPFH") then {
+    [ZuluFX_fusionOverlayPFH] call CBA_fnc_removePerFrameHandler;
 };
 
 ZuluFX_fusionCandidatePFH=[
@@ -37,6 +43,13 @@ ZuluFX_fusionTargetPFH=[
         [] call ZuluFX_fnc_updateFusionTargets;
     },
     0.05
+] call CBA_fnc_addPerFrameHandler;
+
+ZuluFX_fusionOverlayPFH=[
+    {
+        [] call ZuluFX_fnc_updateFusionOverlay;
+    },
+    0
 ] call CBA_fnc_addPerFrameHandler;
 
 true

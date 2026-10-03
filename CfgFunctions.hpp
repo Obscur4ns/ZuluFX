@@ -96,6 +96,13 @@ class CfgFunctions
             class handleFusionVisionInput {};
             class handleFusionVisionMode {};
             class initFusionControls {postInit=1;};
+            class getFusionWindow {};
+            class createFusionOverlay {};
+            class updateFusionOverlay {};
+            class cleanupFusionOverlay {};
+            class fusionCanvas {};
+            class outlineTopology {};
+            class drawFusionOutlines {};
         };
         class HUD
         {

@@ -7,6 +7,12 @@ private _modeData=[] call ZuluFX_fnc_getFusionModeData;
 _modeData params ["_mode","_range","_fov","_manMaterial","_vehicleMaterial","_faceClass"];
 
 private _isMan=_obj isKindOf "Man";
+
+if (_mode=="OUTLINE" && {_isMan}) exitWith {
+    _obj setVariable ["ZuluFX_fusionData",[[],[],"SCREEN_OUTLINE"]];
+    true
+};
+
 private _material=if (_isMan) then {_manMaterial} else {_vehicleMaterial};
 private _selections=[_obj] call ZuluFX_fnc_getFusionSelections;
 private _current=getObjectMaterials _obj;

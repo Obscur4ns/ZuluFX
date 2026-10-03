@@ -32,6 +32,10 @@ if (_uiSuppressed) exitWith {
         if (!isNull _x) then {_x ctrlShow false};
     } forEach (uiNamespace getVariable ["ZuluFX_compassLabels",[]]);
 
+    {
+        if (!isNull _x) then {_x ctrlShow false};
+    } forEach (uiNamespace getVariable ["ZuluFX_compassDirections",[]]);
+
     private _centre=uiNamespace getVariable ["ZuluFX_compassCentre",controlNull];
     private _heading=uiNamespace getVariable ["ZuluFX_compassHeading",controlNull];
 

@@ -5,6 +5,7 @@ private _profile=createHashMapFromArray [
     ["tubeMode",0],
     ["fusionCapable",false],
     ["fusionFOV",30],
+    ["fusionAspect",4/3],
     ["fusionModes",[]],
     ["fusionDefaultMode","PATROL"],
     ["fusionPatrolRange",500],
@@ -35,6 +36,10 @@ private _fusion=getNumber (_cfg >> "ZuluFX_fusionCapable")>0;
 private _fusionFOV=getNumber (_cfg >> "ZuluFX_fusionFOV");
 if (_fusionFOV<=0) then {_fusionFOV=30};
 _fusionFOV=(_fusionFOV max 1) min 120;
+
+private _fusionAspect=getNumber (_cfg >> "ZuluFX_fusionAspect");
+if (_fusionAspect<=0) then {_fusionAspect=4/3};
+_fusionAspect=(_fusionAspect max 0.5) min 2;
 
 private _fusionModes=[];
 {
@@ -128,6 +133,7 @@ _profile set ["supported",_tubeMode in [2,4]];
 _profile set ["tubeMode",_tubeMode];
 _profile set ["fusionCapable",_fusion];
 _profile set ["fusionFOV",_fusionFOV];
+_profile set ["fusionAspect",_fusionAspect];
 _profile set ["fusionModes",_fusionModes];
 _profile set ["fusionDefaultMode",_fusionDefault];
 _profile set ["fusionPatrolRange",_patrolRange];

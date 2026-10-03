@@ -12,6 +12,13 @@ if (!isNil "ZuluFX_fusionTargetPFH") then {
     ZuluFX_fusionTargetPFH=nil;
 };
 
+if (!isNil "ZuluFX_fusionOverlayPFH") then {
+    [ZuluFX_fusionOverlayPFH] call CBA_fnc_removePerFrameHandler;
+    ZuluFX_fusionOverlayPFH=nil;
+};
+
+[] call ZuluFX_fnc_cleanupFusionOverlay;
+
 {
     if (!isNull _x) then {
         [_x] call ZuluFX_fnc_restoreFusionTarget;

@@ -12,26 +12,34 @@ private _display=findDisplay 46;
 if (isNull _display) exitWith {false};
 
 private _ticks=[];
-private _labels=[];
+private _bearings=[];
+private _directions=[];
 
 for "_i" from 0 to 14 do {
     private _tick=_display ctrlCreate ["RscText",-1];
-    _tick ctrlSetBackgroundColor [0.78,0.95,0.92,0.92];
+    _tick ctrlSetBackgroundColor [1,1,1,0.90];
     _tick ctrlEnable false;
     _tick ctrlShow false;
     _tick ctrlCommit 0;
     _ticks pushBack _tick;
 
-    private _label=_display ctrlCreate ["RscStructuredText",-1];
-    _label ctrlSetStructuredText parseText "";
-    _label ctrlEnable false;
-    _label ctrlShow false;
-    _label ctrlCommit 0;
-    _labels pushBack _label;
+    private _bearing=_display ctrlCreate ["RscStructuredText",-1];
+    _bearing ctrlSetStructuredText parseText "";
+    _bearing ctrlEnable false;
+    _bearing ctrlShow false;
+    _bearing ctrlCommit 0;
+    _bearings pushBack _bearing;
+
+    private _direction=_display ctrlCreate ["RscStructuredText",-1];
+    _direction ctrlSetStructuredText parseText "";
+    _direction ctrlEnable false;
+    _direction ctrlShow false;
+    _direction ctrlCommit 0;
+    _directions pushBack _direction;
 };
 
 private _centre=_display ctrlCreate ["RscText",-1];
-_centre ctrlSetBackgroundColor [0.82,1,0.96,1];
+_centre ctrlSetBackgroundColor [1,1,1,1];
 _centre ctrlEnable false;
 _centre ctrlShow false;
 _centre ctrlCommit 0;
@@ -43,7 +51,8 @@ _heading ctrlShow false;
 _heading ctrlCommit 0;
 
 uiNamespace setVariable ["ZuluFX_compassTicks",_ticks];
-uiNamespace setVariable ["ZuluFX_compassLabels",_labels];
+uiNamespace setVariable ["ZuluFX_compassLabels",_bearings];
+uiNamespace setVariable ["ZuluFX_compassDirections",_directions];
 uiNamespace setVariable ["ZuluFX_compassCentre",_centre];
 uiNamespace setVariable ["ZuluFX_compassHeading",_heading];
 
